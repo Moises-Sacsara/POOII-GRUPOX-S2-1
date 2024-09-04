@@ -1,0 +1,18 @@
+Moises Sacsara, 32323, Mate
+Fisica
+Moises, 12345, Mate
+Moises, 12345, Fisi
+Juan, 321, Mate, 4
+Juan, 321, Fisi, 13
+Juan, 321, Comu, 17
+Carlos, 4343432, Economia, 2
+Carlos, 4343432, POO2, 13
+Carlos, 4343432, Ingles, 4
+Max, 3456, Mate, 15
+Max, 3456, Fisica, 13
+Tona, 323242, Mate, 20
+Tona, 323242, Quimica, 19
+Tona, 323242, Biologia, 10
+Tona, 323242, Fisica, 0
+Tona, 323242, POO, 20
+Tona, 323242, Teoria, 7
