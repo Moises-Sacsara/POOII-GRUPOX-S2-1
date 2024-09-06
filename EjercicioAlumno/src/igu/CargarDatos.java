@@ -3,15 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package igu;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
-import logica.CAlumno;
-import logica.CCurso;
-import logica.CDocente;
 /**
  *
  * @author Moises
@@ -177,31 +172,33 @@ public class CargarDatos extends javax.swing.JFrame {
         //cargarDatos();
         String nombre = txtNombre.getText();
         String codigoAlumno = txtCodigo.getText();
-        String listaCursos = txtResultado.getText();
-        escribirArchivo(nombre, codigoAlumno, listaCursos);
-        txtNombre.setText("");
-        txtCodigo.setText("");
-        txtResultado.setText("");
+        
+        buscarDatos(nombre, codigoAlumno); 
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    private void escribirArchivo(String nombre, String codigoAlumno, String listaCursos) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("matricula.txt", true))){
-            
-        String[] cursos = listaCursos.split("\n");
-        CDocente docente = new CDocente();
+    private void buscarDatos(String nombre, String codigoAlumno) {
+    try (BufferedReader br = new BufferedReader(new FileReader("matricula.txt"))) {
+        String linea;
+        StringBuilder resultado = new StringBuilder();
         
-        for (String curso : cursos) {
-   
-            CCurso cursoObj = new CCurso(curso.trim());
-            int nota = docente.calificarCurso(cursoObj);
-
-            bw.write(nombre + ", " + codigoAlumno + ", " + curso.trim() + ", " + nota);
-            bw.newLine();
+        while ((linea = br.readLine()) != null) {
+            String[] datos = linea.split(", ");
+            
+            // Verificar si el nombre y código coinciden
+            if (datos.length == 4 && datos[0].equalsIgnoreCase(nombre) && datos[1].equals(codigoAlumno)) {
+                resultado.append(datos[2])
+                         .append(", ").append(datos[3]).append("\n");
+            }
         }
-            JOptionPane.showMessageDialog(this, "matricula creada correctamente.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al escribir en el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        
+        if (resultado.length() > 0) {
+            txtResultado.setText(resultado.toString());
+        } else {
+            txtResultado.setText("No se encontraron datos para el alumno ingresado.");
         }
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error al leer el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }
     /**
      * @param args the command line arguments
